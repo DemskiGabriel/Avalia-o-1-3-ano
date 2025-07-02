@@ -1,0 +1,39 @@
+<ion-content [fullscreen]="true" class="ion-padding">
+  <!-- Senac Logo -->
+  <h1>Register</h1>
+
+  <ion-text *ngIf="registerErr" color="danger">Register error, Please fill the fields</ion-text>
+  <ion-text *ngIf="passErr" color="danger">Register error, passwords must be the same.</ion-text>
+  
+  <!-- Username -->
+  <ion-input label="Full Name" label-placement="floating" fill="outline" 
+  [(ngModel)]="username" 
+  [class.input-error]="registerErr"
+  ></ion-input>
+  <br>
+  <!-- Email -->
+  <ion-input label="Email" label-placement="floating" fill="outline" 
+  [(ngModel)]="email" 
+  [class.input-error]="registerErr"
+  ></ion-input>
+  <br>
+  <!-- Password -->
+  <ion-input label="Password" label-placement="floating" fill="outline" 
+  [(ngModel)]="pass" 
+  [class.input-error]="registerErr"
+  [class.input-error]="passErr"
+  ></ion-input>
+  <br>
+  <!-- Confirm Password -->
+  <ion-input label="Confirm Password" label-placement="floating" fill="outline" 
+  [(ngModel)]="confirmPass" 
+  [class.input-error]="registerErr"
+  [class.input-error]="passErr"
+  ></ion-input>
+  <br>
+
+  <!-- Register Button -->
+  <ion-button expand="block" color="warning" (click)="post()">Register</ion-button>
+  <!-- Login button -->
+  <ion-button expand="block" class="login" routerLink="/login">Login</ion-button>
+</ion-content>

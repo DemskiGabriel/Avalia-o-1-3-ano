@@ -1,0 +1,54 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defalt-href="#"></ion-back-button>
+    </ion-buttons>
+    <ion-title>NOVA TAREFA</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <!-- Titulo -->
+  <h2 align="center" style="margin-bottom: 10%;">Criar Nova Tarefa</h2>
+
+  <ion-list>
+    <ion-item>
+      <ion-input labelPlacement="floating" label="Titulo" [(ngModel)]="title"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input labelPlacement="floating" label="Responsavel" [(ngModel)]="manager"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-textarea label="Descrição da tarefa" labelPlacement="floating" [autoGrow]="true" [(ngModel)]="description"></ion-textarea>
+    </ion-item>
+  </ion-list>
+
+  <br><h4>Adicionar Etapas:</h4>
+
+  <ion-list>
+    <ion-item *ngFor="let step of steps; let i = index; trackBy: trackByIndex" lines="none" class="steps">
+      <ion-input
+        [(ngModel)]="step.name" name="Etapa{{i}}"
+        placeholder="Etapa {{ i + 1 }}"
+        fill="outline"
+      ></ion-input>
+
+      <ion-checkbox
+        slot="end"
+        labelPlacement="end"
+        [(ngModel)]="step.completed"
+        aria-label="Concluído"
+        color="success"
+      ></ion-checkbox>
+    </ion-item>
+    <ion-button style="margin-left: 5%" (click)="adicionarEtapa()">
+      Nova Etapa
+    </ion-button>
+  </ion-list>
+  
+  <br>
+  <ion-button expand="block" color="secondary" type="submit" (click)="salvar()">
+    Salvar
+  </ion-button>
+
+</ion-content>

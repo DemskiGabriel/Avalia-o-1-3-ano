@@ -1,0 +1,8 @@
+{
+    "/requisicao":{
+        "target": "http://localhost/avaliacao1/index.php",
+        "secure": false,
+        "changeOrigin": true,
+        "logLevel": "debug"
+    }
+}

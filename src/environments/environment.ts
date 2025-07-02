@@ -14,3 +14,14 @@ export const environment = {
  * on performance if an error is thrown.
  */
 // import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
+
+// Your web app's Firebase configuration
+export const firebaseConfig = {
+  apiKey: "AIzaSyCyFd1sYi6qDjbBkA2Dt1qAv2Kc6jVGEtU",
+  authDomain: "gerenciadordetarefas-3ano.firebaseapp.com",
+  databaseURL: "https://gerenciadordetarefas-3ano-default-rtdb.firebaseio.com",
+  projectId: "gerenciadordetarefas-3ano",
+  storageBucket: "gerenciadordetarefas-3ano.firebasestorage.app",
+  messagingSenderId: "255521013631",
+  appId: "1:255521013631:web:d9c4d377956eb87128e44a"
+};

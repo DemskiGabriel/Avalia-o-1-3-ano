@@ -4,11 +4,19 @@ import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalo
 
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
+import { provideHttpClient } from '@angular/common/http';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { firebaseConfig } from './environments/environment';
+import { provideDatabase } from '@angular/fire/database';
+import { getDatabase } from 'firebase/database';
 
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
+    provideHttpClient(),
+    provideFirebaseApp(() => initializeApp(firebaseConfig)),
+    provideDatabase(() => getDatabase())
   ],
 });
