@@ -1,0 +1,30 @@
+/* detalhes-de-tarefa.page.scss */
+
+ion-footer {
+    // Garante que o footer ocupe toda a largura
+    width: 100%;
+    // Força o posicionamento fixo em relação à viewport
+    position: fixed;
+    // Anexa o footer à parte inferior da viewport
+    bottom: 0;
+    // Garante que ele se estenda por toda a largura
+    left: 0;
+    right: 0;
+    // Z-index para garantir que ele fique acima do conteúdo
+    z-index: 100; // Um valor alto para garantir que ele esteja no topo
+    // Cor de fundo para que ele não seja transparente (opcional)
+    background: var(--ion-color-step-50, #f2f2f2); // Usa a cor de fundo padrão do Ionic ou um fallback
+    // Sombra para destacá-lo (opcional, mas visualmente agradável)
+    box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
+    // Padding para áreas seguras em dispositivos com entalhes/bordas arredondadas (como iPhones)
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+.steps{
+    text-align: right;
+}
+
+ion-progress-bar{
+    height: 1.5vh;
+    border-radius: 10px;
+}

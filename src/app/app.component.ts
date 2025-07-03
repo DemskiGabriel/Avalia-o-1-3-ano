@@ -6,7 +6,9 @@ import {
   personCircleOutline,
   addOutline,
   trash, 
-  brushOutline
+  brushOutline,
+  readerOutline,
+  barChartOutline
 } from 'ionicons/icons';
 
 
@@ -17,6 +19,6 @@ import {
 })
 export class AppComponent {
   constructor() {
-    addIcons({ personCircleOutline, addOutline, trash, brushOutline });
+    addIcons({ personCircleOutline, addOutline, trash, brushOutline, readerOutline, barChartOutline });
   }
 }

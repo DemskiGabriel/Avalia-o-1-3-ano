@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import { Database, ref, list, set, onValue, remove } from '@angular/fire/database';
-import { query } from 'firebase/database';
+import { Database, ref, list, set, onValue, remove, update } from '@angular/fire/database'; // Importe 'update'
+import { query } from 'firebase/database'; // Embora 'query' seja importado, não está sendo usado
 import { firstValueFrom, from } from 'rxjs';
 
 @Injectable({
@@ -42,8 +42,16 @@ export class RealtimeDatabaseService {
   query(url: string, callback: any){
     return onValue(this.ref(url), callback);
   }
-  
+
   remove(url:string){
     return remove(this.ref(url));
+  }
+
+  // >>> CORREÇÃO AQUI <<<
+  update(path: string, data: any): Promise<void> {
+    // Cria a referência para o caminho onde você quer atualizar
+    const dbRef = this.ref(path);
+    // Usa a função 'update' do Firebase com a referência e os dados
+    return update(dbRef, data);
   }
 }

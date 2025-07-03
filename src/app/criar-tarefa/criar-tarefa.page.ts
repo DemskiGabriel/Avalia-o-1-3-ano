@@ -42,8 +42,7 @@ export class CriarTarefaPage implements OnInit {
     this.load();
   }
   load(){
-    const indice = this.id == 0 ? '' : this.id;
-    this.rt.query(`/criar-tarefa/${indice}`, (snapshot:any) => {
+    this.rt.query(`/criar-tarefa/${this.id}`, (snapshot:any) => {
       const dados = Object(snapshot.val())
       this.title = dados.title;
       this.manager = dados.manager;

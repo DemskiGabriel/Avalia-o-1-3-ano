@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
-import { IonContent, IonHeader, IonIcon, IonTitle, IonToolbar, IonItem, IonLabel, AlertController, IonNote, IonProgressBar, IonFab, IonFabButton, IonBackButton, IonButtons, IonItemSliding, IonItemOptions, IonItemOption } from '@ionic/angular/standalone';
+import { 
+  IonContent, IonHeader, IonIcon, IonTitle, IonToolbar, IonItem, IonLabel, 
+  AlertController, IonNote, IonProgressBar, IonFab, IonFabButton, IonBackButton, 
+  IonButtons, IonItemSliding, IonItemOptions, IonItemOption
+} from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { RealtimeDatabaseService } from '../firebase/realtime-database.service';
 import { RouterLink } from '@angular/router';
@@ -15,20 +19,25 @@ interface Step {
   templateUrl: 'listar-tarefa.page.html',
   styleUrls: ['listar-tarefa.page.scss'],
   standalone: true,
-  imports: [IonItemOption, IonItemOptions, IonItemSliding, IonButtons, IonBackButton, IonFabButton, IonFab, IonProgressBar,  IonNote, IonContent, IonHeader, IonIcon, IonTitle, IonToolbar, IonItem, IonLabel, CommonModule, RouterLink, FormsModule]
+  imports: [
+    IonItemOption, IonItemOptions, IonItemSliding, IonButtons, IonBackButton, 
+    IonFabButton, IonFab, IonProgressBar, IonNote, IonContent, IonHeader, 
+    IonIcon, IonTitle, IonToolbar, IonItem, IonLabel, CommonModule, RouterLink, 
+    FormsModule
+  ]
 })
 export class ListarTarefaPage {
-  public dados:Array<any> = [];
-
+  public dados: Array<any> = [];
+  public selectedSegment: string = 'first';
 
   constructor(
     public rt: RealtimeDatabaseService,
     private alertController: AlertController
-    ) {}
-  
-    ngOnInit() {
-      this.load();
-    }
+  ) {}
+
+  ionViewWillEnter() {
+    this.load();
+  }
 
   load() {
     this.rt.query('/criar-tarefa', (snapshot: any) => {
@@ -36,6 +45,8 @@ export class ListarTarefaPage {
         this.dados = Object(snapshot.val()).
         map((item:any, key:number) => {
           item.id = key;
+          // Garante que 'steps' é um array ao carregar
+          item.steps = Array.isArray(item.steps) ? item.steps : [];
           return item;
         }).filter((item:any) => item != null);
       }else{
@@ -44,15 +55,8 @@ export class ListarTarefaPage {
     })
   }
 
-  /**
-   * Calcula a porcentagem de conclusão de uma tarefa.
-   * @param item O objeto da tarefa contendo as etapas.
-   * @returns Um número entre 0 e 100.
-   */
   getCompletionPercentage(item: any): number {
-    // Verifica se item.steps existe e é um array. Se não for, retorna 0.
     const stepsArray: Step[] = Array.isArray(item.steps) ? item.steps : [];
-
     if (stepsArray.length === 0) {
       return 0;
     }
@@ -61,33 +65,20 @@ export class ListarTarefaPage {
     return Math.round((completedSteps / totalSteps) * 100);
   }
 
-  /**
-   * Retorna o número de etapas concluídas de uma tarefa.
-   * @param item O objeto da tarefa contendo as etapas.
-   * @returns O número de etapas concluídas.
-   */
   getCompletedStepsCount(item: any): number {
-    // Verifica se item.steps existe e é um array. Se não for, retorna 0.
     const stepsArray: Step[] = Array.isArray(item.steps) ? item.steps : [];
     return stepsArray.filter((step: Step) => step.completed).length;
   }
 
-  /**
-   * Retorna o número total de etapas de uma tarefa.
-   * @param item O objeto da tarefa contendo as etapas.
-   * @returns O número total de etapas.
-   */
   getTotalStepsCount(item: any): number {
-    // Verifica se item.steps existe e é um array. Se não for, retorna 0.
     const stepsArray: Step[] = Array.isArray(item.steps) ? item.steps : [];
     return stepsArray.length;
   }
 
-  // Function to delete the selected element in the list.
-  async excluir(id:number){
+  async excluir(id: number) {
     const alert = await this.alertController.create({
       header: 'TEM CERTEZA QUE DESEJA DELETAR?',
-      message: 'Essa ação não podera ser desfeita',
+      message: 'Essa ação não poderá ser desfeita',
       buttons: [
         {
           text: 'Cancel',
@@ -102,8 +93,6 @@ export class ListarTarefaPage {
         },
       ],
     });
-
     await alert.present();
   }
 }
-

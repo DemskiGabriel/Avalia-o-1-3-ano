@@ -1,65 +1,59 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defalt-href="#"></ion-back-button>
+      <ion-back-button default-href="#"></ion-back-button>
     </ion-buttons>
     <ion-title>INFORMAÇÕES</ion-title>
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content [fullscreen]="true" class="ion-padding">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">informacoes</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-<ion-content>
-
-<h1 align="center"><b>TÍTULO</b></h1>
-<P align="center">Descrição da tarefa </P>
-<br>
-
-<ion-item>
-  <ion-label slot="start">
-    <ion-avatar>
-      <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-    </ion-avatar> 
-  </ion-label>
-
-  <ion-label slot="start">
-    <strong>Nome do responsável</strong><br> 
-    <ion-note>Responsável pela tarefa</ion-note>
+  <ng-container *ngIf="tarefa">
+    <h1 align="center"><b>{{tarefa.title}}</b></h1>
+    <p align="center">{{tarefa.description}}</p>
     <br>
-  </ion-label>
-</ion-item>
 
-<P align="center" style="margin-top: 40px;">Acompanhe as etapas da sua tarefa!</P>
+    <ion-item lines="none">
+      <ion-avatar slot="start">
+        <ion-icon name="person-circle-outline" size="large"></ion-icon>
+      </ion-avatar>
 
-<ion-list style="margin-top: 25px;">
-  <ion-item>
-    <ion-checkbox>Nome da etapa</ion-checkbox>
-  </ion-item>
-</ion-list>  
+      <ion-label>
+        <strong>{{tarefa.manager}}</strong>
+        <br>
+      </ion-label>
+    </ion-item>
 
-<ion-list>
-  <ion-item>
-    <ion-checkbox>Nome da etapa</ion-checkbox>
-  </ion-item>
-</ion-list>  
+    <br><br><br>
+    <P>Acompanhe as etapas da sua tarefa!</P>
+    <ion-list style="padding-right: 4%;">
+      <ion-item *ngFor="let step of tarefa.steps; let i = index;">
+        <ion-checkbox
+          [(ngModel)]="step.completed"       
+          (ionChange)="onStepToggle(step, i)" >{{step.name}}</ion-checkbox>
+      </ion-item>
+      <ion-item *ngIf="tarefa.steps.length === 0">
+        <ion-label>Nenhuma etapa adicionada para esta tarefa.</ion-label>
+      </ion-item>
+    </ion-list>
 
-<ion-list>
-  <ion-item>
-    <ion-checkbox>Nome da etapa</ion-checkbox>
-  </ion-item>
-</ion-list>  
+    <ion-footer slot="fixed">
+      <ion-item lines="none">
+        <ion-label>
+          <ion-note class="steps">
+            {{ getCompletedStepsCount() }} / {{ getTotalStepsCount() }}
+          </ion-note>
+          <ion-progress-bar [value]="getCompletionPercentage() / 100"></ion-progress-bar>
+        </ion-label>
+      </ion-item>
+    </ion-footer>
+  </ng-container>
 
-<ion-footer style="margin-top: 95px;">
-  <ion-item>
-    <ion-progress-bar></ion-progress-bar>
-  </ion-item>
-</ion-footer>
-
-
-
+  <ng-container *ngIf="!tarefa && tarefaId">
+    <p align="center">Carregando tarefa ou tarefa não encontrada...</p>
+  </ng-container>
+  <ng-container *ngIf="!tarefaId">
+    <p align="center">Nenhum ID de tarefa fornecido para visualização.</p>
+  </ng-container>
 </ion-content>
